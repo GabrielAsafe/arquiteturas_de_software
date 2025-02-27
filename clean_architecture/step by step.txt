@@ -1,0 +1,63 @@
+Core Business Logic (Entities and Use Cases):
+This layer is where you define your core classes and functions that handle your application's business logic.
+Entities (the domain objects) represent the heart of the application. For example, in an online store, entities would be classes like Product, Order, Customer, etc.
+Use Cases (application logic) implement specific business actions, like CreateOrder, AddProductToCart, ProcessPayment, etc. These use cases orchestrate how the entities interact and define the actual functionality your app will provide.
+So, yes, you would create the classes and functions related to the core business logic here.
+
+2. Interface Adapters (API, WebSockets, Controllers, Gateways):
+This layer acts as the bridge between your core logic and the outside world. It adapts data from the core logic to a format suitable for external systems (like APIs or the UI).
+For example:
+API controllers: If you're building a REST API, your controllers would sit here. They take HTTP requests, pass the data to the appropriate use case, and return the response.
+WebSocket handlers: If you need real-time updates (for instance, for notifications or live updates), you'd implement WebSocket communication here.
+Gateways: These are responsible for communicating with external systems like external APIs or services, handling data transformations, and passing information back to your use cases.
+In this layer, you could define API routes (for REST), WebSocket connections, and other network-related services.
+
+3. Database and External Interfaces (Frameworks/Drivers):
+This is the outermost layer, where you handle specific technology integrations like databases, frameworks, UI, and other external systems.
+Database Connections: You would implement how your app communicates with databases here, such as using an ORM (e.g., SQLAlchemy, Django ORM) or raw SQL queries.
+For example, you might create a repository or data access layer that interacts with the database. This layer talks to the core business logic via interfaces, but the core logic doesn’t know anything about the database.
+UI: You’d implement the user interface (UI) here. If you're building a web app, this could be your frontend (e.g., React, Angular, Vue.js). If it's a desktop app, it would be your GUI (e.g., using a framework like Qt, GTK, or a webview).
+Frameworks: This includes web frameworks (e.g., Flask, Django, Express), messaging systems, and other external libraries that facilitate your application’s functionality.
+Flow Overview
+Core Layer (Entities and Use Cases):
+Define your business logic. This layer is technology-agnostic—it does not care about the database or how data comes in from the user interface.
+Interface Adapters (API, WebSockets):
+Connect the core layer to the outside world via controllers (for APIs), web socket handlers, etc. These adapt the input/output to and from the core layer.
+Frameworks/Drivers (DB, UI):
+Handle database connections, external services, and user interfaces. This is where specific technologies like SQL databases, NoSQL databases, or front-end frameworks will be integrated.
+
+
+
+Core Layer:
+Entities:
+Task: Represents the core domain object of your application. A Task might have properties like:
+
+id, title, description, dueDate, status, createdAt, etc.
+Business rules: A Task can have methods like markAsCompleted(), setDueDate(), etc., which contain the logic for task operations.
+User: Represents a user of the application. A User might have properties like:
+
+id, name, email, tasks, etc.
+Business rules: A User can have methods like assignTask() or getAllTasks(), which relate to the user's operations.
+Use Cases:
+CreateTask: The use case for creating a new task. It interacts with the Task entity to initialize a new task with details like the title and due date.
+CompleteTask: The use case that marks a task as completed. It might call a method like task.markAsCompleted(), which will change the task's status.
+DeleteTask: The use case that deletes a task from the system.
+AssignTaskToUser: A use case that assigns a task to a user.
+Interface Adapters:
+API Controllers:
+These controllers bridge the gap between the user's HTTP requests (coming from the UI) and the core business logic.
+
+POST /tasks:
+This endpoint will accept a new task's details from the user and call the CreateTask use case to create a new task.
+PUT /tasks/{id}/complete:
+This endpoint will take the task ID, invoke the CompleteTask use case, and mark the task as completed.
+DELETE /tasks/{id}:
+This endpoint will allow the user to delete a task, invoking the DeleteTask use case.
+WebSocket Handlers (optional):
+If your application needs to provide real-time updates (e.g., notifying users when a task is completed), this layer would handle WebSocket connections and broadcast events.
+For example, when a task is completed, you can send a real-time notification to all clients via WebSocket, keeping the interface updated.
+Frameworks/Drivers:
+Database Layer:
+This is where you interact with a database to store and retrieve tasks.
+You would have a repository or data access layer that talks to the database and performs actions like creating, updating, deleting, and querying tasks. This is where you would use an ORM like SQLAlchemy or a NoSQL database like MongoDB.
+Example: A TaskRepository class could be responsible for CRUD operations on tasks.
