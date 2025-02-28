@@ -1,0 +1,5 @@
+Model: É o responsável pelos dados e pela lógica de negócios. Ele pode buscar dados de uma API, banco de dados ou até calcular algo. Ele não sabe de nada sobre a interface do usuário.
+
+ViewModel: Fica entre a View e o Model. Ela contém os dados que a View precisa e pode manipular esses dados de maneira mais apropriada. A ViewModel tem funções que recebem os dados do Model e os prepara para que a View consiga exibi-los. A ViewModel também pode realizar lógica de negócios simples ou chamar funções do Model para buscar/alterar os dados.
+
+View: A View é a interface gráfica que mostra os dados para o usuário e coleta interações. Ela não contém lógica de negócios, apenas apresenta os dados que a ViewModel fornece e repassa as interações do usuário (como cliques) para a ViewModel. A View observa a ViewModel para ser notificada quando os dados mudam.
